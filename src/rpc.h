@@ -1,7 +1,9 @@
 #pragma once
 
+#include <iostream>
 #include <map>
 #include <set>
+
 #include "cc/timing_wheel.h"
 #include "common.h"
 #include "msg_buffer.h"
@@ -146,6 +148,11 @@ class Rpc {
     Buffer buffer =
         huge_alloc_->alloc(max_data_size + (max_num_pkts * sizeof(pkthdr_t)));
     unlock_cond(&huge_alloc_lock_);
+
+    std::cout << "Buffer address = " << static_cast<void *>(buffer)
+              << std::endl;
+    std::cout << "Buffer size    = "
+              << max_data_size + (max_num_pkts * sizeof(pkthdr_t)) << std::endl;
 
     if (unlikely(buffer.buf_ == nullptr)) {
       MsgBuffer msg_buffer;

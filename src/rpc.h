@@ -149,7 +149,7 @@ class Rpc {
         huge_alloc_->alloc(max_data_size + (max_num_pkts * sizeof(pkthdr_t)));
     unlock_cond(&huge_alloc_lock_);
 
-    std::cout << "Buffer address = " << static_cast<void *>(&buffer)
+    std::cout << "Buffer address = " << static_cast<void *>(buffer.buf_)
               << std::endl;
     std::cout << "Buffer size    = "
               << max_data_size + (max_num_pkts * sizeof(pkthdr_t)) << std::endl;

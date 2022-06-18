@@ -59,7 +59,7 @@ Rpc<TTr>::Rpc(Nexus *nexus, void *context, uint8_t rpc_id,
                     transport_->dereg_mr_func_);
 
   // smz
-  std::cout << "allocated - smz1!" << std::endl;
+  std::cout << "allocated - smz2!" << std::endl;
 
   // Complete transport initialization using the hugepage allocator
   transport_->init_hugepage_structures(huge_alloc_, rx_ring_);

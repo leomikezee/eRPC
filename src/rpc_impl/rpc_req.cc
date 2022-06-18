@@ -59,7 +59,7 @@ void Rpc<TTr>::enqueue_request(int session_num, uint8_t req_type,
   pkthdr_0->req_num_ = sslot.cur_req_num_;
 
   // smz
-  auto tmp = reinterpret_cast<uint16_t *> req_msgbuf->buf_;
+  auto tmp = reinterpret_cast<uint16_t *>(req_msgbuf->buf_);
   tmp[0] = 1987;
   tmp[1] = session->remote_session_num_;
 

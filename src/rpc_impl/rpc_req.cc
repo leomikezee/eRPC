@@ -62,6 +62,8 @@ void Rpc<TTr>::enqueue_request(int session_num, uint8_t req_type,
   auto tmp = reinterpret_cast<uint16_t *>(req_msgbuf->buf_);
   tmp[0] = 1987;
   tmp[1] = session->remote_session_num_;
+  auto tmp2 = reinterpret_cast<Transport::routing_info_t **>(tmp + 2);
+  *tmp2 = sslot.session_->remote_routing_info_;
 
   // Fill in any non-zeroth packet headers, using pkthdr_0 as the base.
   if (unlikely(req_msgbuf->num_pkts_ > 1)) {

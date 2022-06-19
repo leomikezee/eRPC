@@ -10,6 +10,7 @@
 #include "pkthdr.h"
 #include "util/buffer.h"
 #include "util/math_utils.h"
+#include "sslot.h"
 
 namespace erpc {
 
@@ -54,7 +55,7 @@ class Transport {
   struct tx_burst_item_t {
     routing_info_t* routing_info_;  ///< Routing info for this packet
     MsgBuffer* msg_buffer_;         ///< MsgBuffer for this packet
-
+    SSlot* sslot;
     size_t pkt_idx_;  /// Packet index (not pkt_num) in msg_buffer to transmit
     size_t* tx_ts_ = nullptr;  ///< TX timestamp, only for congestion control
     bool drop_;                ///< Drop this packet. Used only with kTesting.

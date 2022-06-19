@@ -56,13 +56,15 @@ void IBTransport::tx_burst(const tx_burst_item_t* tx_burst_arr,
 
     // smz
     auto tmp = reinterpret_cast<uint16_t *>(msg_buffer->buf_);
-    if (tmp[0] == 1987) {
+    if (tmp[0] == 1987)
       assert(tmp[1] == pkthdr->dest_session_num_);
-      std::cout << "smz" << std::endl;
-    }
 
     const auto* ib_rinfo =
         reinterpret_cast<ib_routing_info_t*>(item.routing_info_);
+
+    // smz
+    assert(item.routing_info_ == item.sslot->session_->remote_routing_info_);
+
     wr.wr.ud.ah = ib_rinfo->ah;
     wr.wr.ud.remote_qpn = ib_rinfo->qpn;
     if (kTesting && item.drop_) wr.wr.ud.remote_qpn = 0;

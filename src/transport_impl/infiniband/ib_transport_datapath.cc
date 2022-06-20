@@ -57,7 +57,7 @@ void IBTransport::tx_burst(const tx_burst_item_t* tx_burst_arr,
     // smz
     auto tmp = reinterpret_cast<uint16_t *>(msg_buffer->buf_);
     if (tmp[0] == 1987)
-      assert(tmp[1] == pkthdr->dest_session_num_);
+      assert(tmp[1] == pkthdr->session->remote_session_num_);
 
     const auto* ib_rinfo =
         reinterpret_cast<ib_routing_info_t*>(item.routing_info_);

@@ -25,11 +25,9 @@ void IBTransport::tx_burst(const tx_burst_item_t* tx_burst_arr,
     // Set signaling + poll SEND CQ if needed. The wr is non-inline by default.
     wr.send_flags = get_signaled_flag() ? IBV_SEND_SIGNALED : 0;
 
-    // smz
-    const pkthdr_t* pkthdr;
     if (item.pkt_idx_ == 0) {
       // This is the first packet, so we need only 1 SGE. This can be CR/RFR.
-      pkthdr = msg_buffer->get_pkthdr_0();
+      const pkthdr_t* pkthdr = msg_buffer->get_pkthdr_0();
       sgl[0].addr = reinterpret_cast<uint64_t>(pkthdr);
       sgl[0].length = msg_buffer->get_pkt_size<kMaxDataPerPkt>(0);
       sgl[0].lkey = msg_buffer->buffer_.lkey_;
@@ -40,7 +38,7 @@ void IBTransport::tx_burst(const tx_burst_item_t* tx_burst_arr,
     } else {
       // This is not the first packet, so we need 2 SGEs. This involves a
       // a division, which is OK because it is a large message.
-      pkthdr = msg_buffer->get_pkthdr_n(item.pkt_idx_);
+      const pkthdr_t* pkthdr = msg_buffer->get_pkthdr_n(item.pkt_idx_);
       sgl[0].addr = reinterpret_cast<uint64_t>(pkthdr);
       sgl[0].length = static_cast<uint32_t>(sizeof(pkthdr_t));
       sgl[0].lkey = msg_buffer->buffer_.lkey_;
@@ -53,11 +51,6 @@ void IBTransport::tx_burst(const tx_burst_item_t* tx_burst_arr,
 
       wr.num_sge = 2;
     }
-
-    // smz
-    auto tmp = reinterpret_cast<uint16_t *> msg_buffer->buf_;
-    if (tmp[0] == 1987)
-      assert(tmp[1] == pkthdr->session->remote_session_num_);
 
     const auto* ib_rinfo =
         reinterpret_cast<ib_routing_info_t*>(item.routing_info_);

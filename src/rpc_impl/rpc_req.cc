@@ -58,11 +58,6 @@ void Rpc<TTr>::enqueue_request(int session_num, uint8_t req_type,
   pkthdr_0->pkt_num_ = 0;
   pkthdr_0->req_num_ = sslot.cur_req_num_;
 
-  // smz
-  auto tmp = reinterpret_cast<uint16_t *> req_msgbuf->buf_;
-  tmp[0] = 1987;
-  tmp[1] = session->remote_session_num_;
-
   // Fill in any non-zeroth packet headers, using pkthdr_0 as the base.
   if (unlikely(req_msgbuf->num_pkts_ > 1)) {
     for (size_t i = 1; i < req_msgbuf->num_pkts_; i++) {

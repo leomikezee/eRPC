@@ -113,8 +113,8 @@ void Rpc<TTr>::process_small_req_st(SSlot *sslot, pkthdr_t *pkthdr) {
   }
   //smz
   if (pkthdr->req_num_ != sslot->cur_req_num_ + kSessionReqWindow)
-    assert(*reinterpret_cast<uint16_t *>(pkthdr + 1) == 1987);
-  if (*reinterpret_cast<uint16_t *>(pkthdr + 1) == 1987)
+    assert(reinterpret_cast<uint16_t>(pkthdr + 1) == 1987);
+  if (reinterpret_cast<uint16_t>(pkthdr + 1) == 1987)
     std::cout << "smz" << std::endl;
   // If we're here, this is the first (and only) packet of this new request
   assert(pkthdr->req_num_ == sslot->cur_req_num_ + kSessionReqWindow);

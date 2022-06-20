@@ -718,6 +718,7 @@ class Rpc {
     item.routing_info_ = sslot->session_->remote_routing_info_;
     item.msg_buffer_ = const_cast<MsgBuffer *>(tx_msgbuf);
     item.pkt_idx_ = pkt_idx;
+    item.sslot = sslot;
 
     // smz
     assert(tx_msgbuf->get_pkthdr_n(pkt_idx)->dest_session_num_ == sslot->session_->remote_session_num_);
@@ -750,9 +751,10 @@ class Rpc {
     item.routing_info_ = sslot->session_->remote_routing_info_;
     item.msg_buffer_ = ctrl_msgbuf;
     item.pkt_idx_ = 0;
+    item.sslot = sslot;
 
     // smz
-    assert(sslot->tx_msgbuf_->get_pkthdr_0()->dest_session_num_ == sslot->session_->remote_session_num_);
+    assert(sslot->tx_msgbuf->get_pkthdr_n(pkt_idx)->dest_session_num_ == sslot->session_->remote_session_num_);
 
     if (kCcRTT) item.tx_ts_ = tx_ts;
 

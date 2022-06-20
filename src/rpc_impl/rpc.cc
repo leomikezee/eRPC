@@ -58,9 +58,6 @@ Rpc<TTr>::Rpc(Nexus *nexus, void *context, uint8_t rpc_id,
       new HugeAlloc(kInitialHugeAllocSize, numa_node_, transport_->reg_mr_func_,
                     transport_->dereg_mr_func_);
 
-  // smz
-  std::cout << "allocated!" << std::endl;
-
   // Complete transport initialization using the hugepage allocator
   transport_->init_hugepage_structures(huge_alloc_, rx_ring_);
 

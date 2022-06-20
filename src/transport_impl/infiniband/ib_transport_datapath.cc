@@ -1,7 +1,7 @@
 #ifdef ERPC_INFINIBAND
 
 #include "ib_transport.h"
-#include <iostream>
+
 namespace erpc {
 
 // Packets that are the first packet in their MsgBuffer use one DMA, and may
